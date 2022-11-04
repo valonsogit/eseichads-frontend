@@ -1,0 +1,43 @@
+---
+import Layout from "../../layouts/Layout.astro";
+interface Docente {
+    id: number;
+    attributes: Props;
+}
+interface Props {
+    nombre: string;
+    genero: "Masculino" | "Femenino";
+    especialidad: string;
+    biografia: string;
+    foto: string;
+}
+export async function getStaticPaths() {
+    const { data } = await fetch("http://0.0.0.0:1337/api/docentes", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
+        },
+    }).then((response) => response.json());
+    console.log(data);
+    return data.map((docente: Docente) => {
+        return {
+            params: { docente: docente.id },
+            props: { ...docente.attributes },
+        };
+    });
+}
+
+const { id } = Astro.params;
+const { nombre, biografia, especialidad, genero, foto } = Astro.props;
+console.log(Astro.props);
+---
+
+<Layout title="">
+    <main>
+        <h1>{nombre}</h1>
+        <span>{especialidad}</span>
+    </main>
+</Layout>
+
+<style></style>
