@@ -1,8 +1,9 @@
 /// <reference types="@astrojs/image/client" />
 
-interface TopLevelPage {
+interface Page {
     id: number
     attributes: {
+        isParent: boolean;
         title: string;
         slug: string;
         html: string;

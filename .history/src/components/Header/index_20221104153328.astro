@@ -2,25 +2,43 @@
 import { Image, Picture } from "@astrojs/image/components";
 import headerLogo from "./images/logo.png";
 import NavMenu from "./vue/NavMenu.vue";
+import * as qs from "querystring";
 export interface Props {
     currentUrl: string;
 }
-const response = await fetch(`${import.meta.env.STRAPI_URL}/top-level-pages`, {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
+const query = qs.stringify(
+    {
+        filters: {
+            username: {
+                $eq: "John",
+            },
+        },
     },
-});
+    {
+        encodeValuesOnly: true, // prettify URL
+    }
+);
+const response = await fetch(
+    `${
+        import.meta.env.STRAPI_URL
+    }/pages?filters[isParent][$eq]=true&populate[true]=childrenPages`,
+    {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
+        },
+    }
+);
 
-const { data, meta }: StrapiResponse<TopLevelPage> = await response.json();
+const { data, meta }: StrapiResponse<Page> = await response.json();
+console.log(data);
 const topPages = data.map((page) => {
     return {
         id: page.id,
         ...page.attributes,
     };
 });
-console.log(topPages);
 
 const { currentUrl } = Astro.props;
 ---
