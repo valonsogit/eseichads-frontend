@@ -14,7 +14,6 @@ import {
 const isOpen = ref(false);
 
 function setIsOpen(show: boolean) {
-    console.log(show);
     isOpen.value = show;
 }
 </script>

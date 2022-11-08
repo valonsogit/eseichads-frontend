@@ -19,7 +19,7 @@ export async function getStaticPaths() {
             encodeValuesOnly: true, // prettify URL
         }
     );
-
+    console.log(query);
     const response = await fetch(
         `${import.meta.env.STRAPI_URL}/pages?${query}`,
         {
@@ -28,7 +28,6 @@ export async function getStaticPaths() {
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
             },
-            cache: "no-store",
         }
     );
     const { data: topPages, meta }: StrapiResponse<Page> =
@@ -43,11 +42,9 @@ export async function getStaticPaths() {
 }
 
 const { title, content } = Astro.props;
-console.log(Astro.props);
 ---
 
 <Layout title={title}>
-    <h1 class="text-5xl font-extrabold">{title}</h1>
     <div
         class="flex flex-col w-full items-center justify-center"
         set:html={content}

@@ -1,9 +1,11 @@
 ---
 import "@fontsource/montserrat";
 import Header from "../components/Header/index.astro";
-
 export interface Props {
     title: string;
+}
+interface CustomDataFile {
+    default: Record<string, any>;
 }
 
 const { title } = Astro.props;
@@ -32,29 +34,57 @@ const currentUrl = Astro.url.pathname;
         />
         <title>{title}</title>
     </head>
-    <Header currentUrl={currentUrl} />
-    <main class="m-auto p-6 w-full flex flex-col items-center">
-        <slot />
-    </main>
-    <style is:global>
-        :root {
-            --accent: 124, 58, 237;
-            --accent-gradient: linear-gradient(
-                45deg,
-                rgb(var(--accent)),
-                #da62c4 30%,
-                white 60%
-            );
-        }
-        html {
-            font-family: system-ui, sans-serif;
-            background-color: #f6f6f6;
-        }
-        code {
-            font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-                DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
-                monospace;
-        }
-    </style>
-
+    <body class="h-screen w-screen">
+        <header
+            class="w-full h-full flex flex-col items-center flex-grow-0 flex-shrink basis-auto"
+        >
+            <Header currentUrl={currentUrl} />
+            <div
+                class="w-full h-full bg-black grid items-center justify-center"
+            >
+                <div
+                    id="tsparticles"
+                    class="h-full w-full"
+                >
+                </div>
+                <h1
+                    class="text-5xl font-extrabold flex-grow flex-shrink basis-auto bg-red-400"
+                >
+                    {title}
+                </h1>
+            </div>
+        </header>
+        <main class="w-full flex flex-col items-center">
+            <slot />
+        </main>
+        <style is:global>
+            :root {
+                --accent: 124, 58, 237;
+                --accent-gradient: linear-gradient(
+                    45deg,
+                    rgb(var(--accent)),
+                    #da62c4 30%,
+                    white 60%
+                );
+            }
+            html {
+                font-family: system-ui, sans-serif;
+                background-color: #f6f6f6;
+            }
+            code {
+                font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+                    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+                    monospace;
+            }
+        </style>
+        <script>
+            import { tsParticles } from "tsparticles-engine";
+            console.log(document.getElementById("tsparticles"));
+            tsParticles.load({
+                autoPlay: true,
+                preset: "bigCircles",
+                container: document.getElementById("tsparticles"),
+            });
+        </script>
+    </body>
 </html>
