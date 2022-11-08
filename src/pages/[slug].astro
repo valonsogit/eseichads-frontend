@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+import qs from "qs";
+
+interface Props extends FlatPage {}
+export async function getStaticPaths() {
+    const query = qs.stringify(
+        {
+            filters: {
+                isParent: {
+                    $eq: true,
+                },
+            },
+            populate: {
+                childrenPages: true,
+            },
+        },
+        {
+            encodeValuesOnly: true, // prettify URL
+        }
+    );
+
+    const response = await fetch(
+        `${import.meta.env.STRAPI_URL}/pages?${query}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
+            },
+            cache: "no-store",
+        }
+    );
+    const { data: topPages, meta }: StrapiResponse<Page> =
+        await response.json();
+
+    return topPages.map(page => {
+        return {
+            params: { slug: page.attributes.slug },
+            props: { id: page.id, ...page.attributes },
+        };
+    });
+}
+
+const { title, content } = Astro.props;
+console.log(Astro.props);
+---
+
+<Layout title={title}>
+    <h1 class="text-5xl font-extrabold">{title}</h1>
+    <div
+        class="flex flex-col w-full items-center justify-center"
+        set:html={content}
+    >
+    </div>
+</Layout>
+
+<style></style>

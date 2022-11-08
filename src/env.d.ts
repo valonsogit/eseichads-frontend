@@ -6,7 +6,20 @@ interface Page {
         isParent: boolean;
         title: string;
         slug: string;
-        html: string;
+        content: string;
+        childrenPages: {
+            data?: Page[];
+        }
+    }
+}
+interface FlatPage {
+    id: number
+    isParent: boolean;
+    title: string;
+    slug: string;
+    content: string;
+    childrenPages: {
+        data?: Page[];
     }
 }
 interface Meta {

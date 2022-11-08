@@ -1,44 +1,37 @@
 ---
 import { Image, Picture } from "@astrojs/image/components";
 import headerLogo from "./images/logo.png";
+import CustomDropdown from "./vue/CustomDropdown.vue";
 import NavMenu from "./vue/NavMenu.vue";
-import * as qs from "qs";
+import qs from "qs";
 export interface Props {
     currentUrl: string;
 }
 const query = qs.stringify(
     {
         filters: {
-            username: {
-                $eq: "John",
+            isParent: {
+                $eq: true,
             },
+        },
+        populate: {
+            childrenPages: true,
         },
     },
     {
         encodeValuesOnly: true, // prettify URL
     }
 );
-const response = await fetch(
-    `${
-        import.meta.env.STRAPI_URL
-    }/pages?filters[isParent][$eq]=true&populate[true]=childrenPages`,
-    {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
-        },
-    }
-);
 
-const { data, meta }: StrapiResponse<Page> = await response.json();
-console.log(data);
-const topPages = data.map((page) => {
-    return {
-        id: page.id,
-        ...page.attributes,
-    };
+const response = await fetch(`${import.meta.env.STRAPI_URL}/pages?${query}`, {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + import.meta.env.STRAPI_TOKEN,
+    },
 });
+
+const { data: topPages, meta }: StrapiResponse<Page> = await response.json();
 
 const { currentUrl } = Astro.props;
 ---
@@ -46,9 +39,12 @@ const { currentUrl } = Astro.props;
 <div
     class="flex w-full p-4 md:p-3 md:px-8 h-[4.5rem] gap-4 bg-gradient-to-r from-[#313b41] to-[#46b396] sticky top-0 z-10 items-center text-white font-bold text-xl"
 >
-    <NavMenu client:load class="md:hidden transition-all" />
+    <NavMenu
+        client:load
+        class="md:hidden transition-all"
+    />
     <Image
-        alt="Gopodo Formación"
+        alt="EseiChads"
         src={headerLogo}
         class="object-contain w-auto h-full"
         aspectRatio="1:1"
@@ -56,14 +52,22 @@ const { currentUrl } = Astro.props;
     <span>ESEIChads</span>
     <nav class="w-full justify-end gap-4 hidden md:flex">
         {
-            topPages.map((page) => (
-                <a
-                    href={page.slug}
-                    class={page.slug == currentUrl ? "text-red-400" : ""}
-                >
-                    {page.title}
-                </a>
-            ))
+            topPages.map(page => {
+                return page.attributes.childrenPages.data?.length ? (
+                    <CustomDropdown
+                        client:load
+                        page={page}
+                        currentUrl={currentUrl}
+                    />
+                ) : (
+                    <a
+                        href={page.attributes.slug}
+                        class="hover:text-gray-300"
+                    >
+                        {page.attributes.title}
+                    </a>
+                );
+            })
         }
     </nav>
 </div>
