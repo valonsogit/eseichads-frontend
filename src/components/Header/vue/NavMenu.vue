@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Bars3Icon } from "@heroicons/vue/24/outline";
-import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { Bars3Icon } from "@heroicons/vue/24/outline/index.js";
+import { XMarkIcon } from "@heroicons/vue/24/outline/index.js";
 
 import {
     TransitionRoot,

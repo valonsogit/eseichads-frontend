@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/24/outline";
+import { ChevronDownIcon } from "@heroicons/vue/24/outline/index.js";
 interface Page {
     id: number;
     attributes: {
