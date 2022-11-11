@@ -20,5 +20,7 @@ export default defineConfig({
   server: { host: true },
   integrations: [tailwind(), sitemap(), prefetch(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
-  }), vue({ appEntrypoint: '/src/pages/_app' })]
+  }), vue({ appEntrypoint: '/src/pages/_app' })],
+  site: 'https://valonsogit.github.io',
+  base: '/eseichads-frontend',
 });

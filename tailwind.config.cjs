@@ -7,7 +7,7 @@ module.exports = {
 				chad: ['Montserrat', 'sans-serif']
 			}, boxShadow: {
 				'custom': '0 0 3px 1px  rgb(255 255 255 / 0.6)',
-			}, colors: {
+			}, colors: { 
 				'black': '#1e1e1e',
 			}
 		},
