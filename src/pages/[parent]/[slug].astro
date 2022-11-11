@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 import qs from "qs";
 
 interface Props extends FlatPage {}
@@ -8,11 +8,11 @@ export async function getStaticPaths() {
         {
             filters: {
                 isParent: {
-                    $eq: true,
+                    $eq: false,
                 },
             },
             populate: {
-                childrenPages: true,
+                parentPage: true,
             },
         },
         {
@@ -29,18 +29,21 @@ export async function getStaticPaths() {
             },
         }
     );
-    const { data: topPages, meta }: StrapiResponse<Page> =
+    const { data: childPages, meta }: StrapiResponse<Page> =
         await response.json();
 
-    return topPages.map(page => {
+    return childPages.map(page => {
         return {
-            params: { slug: page.attributes.slug },
+            params: {
+                parent: page.attributes.parentPage.data?.attributes.slug,
+                slug: page.attributes.slug,
+            },
             props: { id: page.id, ...page.attributes },
         };
     });
 }
 
-const { title, content, childrenPages, displayChildren } = Astro.props;
+const { title, content } = Astro.props;
 ---
 
 <Layout title={title}>
@@ -49,15 +52,6 @@ const { title, content, childrenPages, displayChildren } = Astro.props;
         set:html={content}
     >
     </div>
-    {
-        displayChildren &&
-            childrenPages.data?.map(page => (
-                <div
-                    class="flex flex-col items-center justify-center w-2/3 mt-24"
-                    set:html={page.attributes.content}
-                />
-            ))
-    }
 </Layout>
 
 <style></style>

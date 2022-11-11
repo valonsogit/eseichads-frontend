@@ -17,7 +17,8 @@ import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
+  server: { host: true },
   integrations: [tailwind(), sitemap(), prefetch(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
-  }), vue()]
+  }), vue({ appEntrypoint: '/src/pages/_app' })]
 });

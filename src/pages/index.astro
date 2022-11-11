@@ -1,20 +1,14 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
 ---
 
-<Layout title="ESEICHADS">
-    <h1 class="text-5xl font-extrabold">
-        Welcome to <span class="text-gradient">ESEIChads</span>
-    </h1>
-</Layout>
-
-<style>
-    .text-gradient {
-        background-image: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 400%;
-        background-position: 0%;
-    }
-</style>
+<head>
+    <meta
+        http-equiv="refresh"
+        content={`0; url=/inicio`}
+    />
+</head><button
+    class="w-full bg-teal-600 p-4 absolute rounded left-0 text-center hidden"
+>
+    Redirecting...
+</button>
+<body class="w-screen h-screen bg-black"></body>

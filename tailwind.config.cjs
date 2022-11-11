@@ -6,7 +6,9 @@ module.exports = {
 			fontFamily: {
 				chad: ['Montserrat', 'sans-serif']
 			}, boxShadow: {
-				'custom': '0 0px 25px -5px rgb(0 0 0 / 0.5), 0px 8px 10px -6px rgb(0 0 0 / 0.1)',
+				'custom': '0 0 3px 1px  rgb(255 255 255 / 0.6)',
+			}, colors: {
+				'black': '#1e1e1e',
 			}
 		},
 	},

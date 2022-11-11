@@ -3,6 +3,7 @@
 interface Page {
     id: number
     attributes: {
+        displayChildren: boolean;
         isParent: boolean;
         title: string;
         slug: string;
@@ -10,16 +11,23 @@ interface Page {
         childrenPages: {
             data?: Page[];
         }
+        parentPage: {
+            data?: Page;
+        }
     }
 }
 interface FlatPage {
     id: number
     isParent: boolean;
+    displayChildren: boolean;
     title: string;
     slug: string;
     content: string;
     childrenPages: {
         data?: Page[];
+    }
+    parentPage: {
+        data?: Page;
     }
 }
 interface Meta {

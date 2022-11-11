@@ -1,6 +1,8 @@
 ---
 import "@fontsource/montserrat";
+import { ChevronDownIcon } from "@heroicons/vue/24/outline";
 import Header from "../components/Header/index.astro";
+import CustomParticles from "./CustomParticles.vue";
 export interface Props {
     title: string;
 }
@@ -32,31 +34,76 @@ const currentUrl = Astro.url.pathname;
             name="generator"
             content={Astro.generator}
         />
-        <title>{title}</title>
+        <title>ESEIChads - {title}</title>
     </head>
-    <body class="h-screen w-screen">
+    <body class="h-screen w-screen text-white bg-black">
         <header
-            class="w-full h-full flex flex-col items-center flex-grow-0 flex-shrink basis-auto"
+            class="w-full h-screen flex flex-col items-center flex-grow-0 flex-shrink basis-auto text-white"
         >
             <Header currentUrl={currentUrl} />
             <div
-                class="w-full h-full bg-black grid items-center justify-center"
+                class="w-full h-full bg-black flex flex-col items-center justify-center relative"
             >
-                <div
-                    id="tsparticles"
-                    class="h-full w-full"
-                >
-                </div>
+                <CustomParticles
+                    class="w-full h-full absolute z-0"
+                    client:idle
+                />
                 <h1
-                    class="text-5xl font-extrabold flex-grow flex-shrink basis-auto bg-red-400"
+                    id="repulse-div"
+                    class="text-5xl font-extrabold basis-auto p-12 z-10 text-center"
                 >
-                    {title}
+                    {title.trim()}
                 </h1>
+                <button id="skip-to-content">
+                    <ChevronDownIcon
+                        client:load
+                        class="absolute bottom-2 left-0 w-full h-16 z-10 text-white self-center animate-pulse"
+                    />
+                </button>
+                <script>
+                    let chevron = document.getElementById("skip-to-content");
+                    if (chevron) {
+                        chevron.onclick = function () {
+                            const element = document.getElementById("content");
+                            if (element) {
+                                element.scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                            }
+                        };
+                    }
+                </script>
             </div>
         </header>
-        <main class="w-full flex flex-col items-center">
+        <main
+            id="content"
+            class="w-full flex flex-col items-center bg-black text-white bg-fixed bg-cover bg-center py-36 px-12"
+        >
             <slot />
         </main>
+        <footer
+            class="w-full flex flex-col items-center justify-center bg-black text-white py-6 font-mono text-sm"
+        >
+            <span class="w-2/3">
+                © Paulo Sánchez, 2022. Todos los derechos reservados.
+            </span>
+            <span><br /></span>
+
+            <span class="w-2/3"
+                >Esta web y todo su contenido es propiedad exclusiva reservada a
+                los responsables de la misma y a las correspondientes figuras
+                mencionadas. No existe ninguna relación legal intencionada entre
+                el contenido aquí expuesto y el organismo oficial de la ESEI y/o
+                derivados (ESEIDA).
+            </span>
+            <span><br /></span>
+            <span class="w-2/3">
+                Para cualquier queja o reclamación sobre el contenido de esta
+                plataforma, diríjase al apartado de contacto para poder
+                comunicársela a los responsables.
+            </span>
+        </footer>
+
         <style is:global>
             :root {
                 --accent: 124, 58, 237;
@@ -67,24 +114,6 @@ const currentUrl = Astro.url.pathname;
                     white 60%
                 );
             }
-            html {
-                font-family: system-ui, sans-serif;
-                background-color: #f6f6f6;
-            }
-            code {
-                font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-                    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
-                    monospace;
-            }
         </style>
-        <script>
-            import { tsParticles } from "tsparticles-engine";
-            console.log(document.getElementById("tsparticles"));
-            tsParticles.load({
-                autoPlay: true,
-                preset: "bigCircles",
-                container: document.getElementById("tsparticles"),
-            });
-        </script>
     </body>
 </html>
