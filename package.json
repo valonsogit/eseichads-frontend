@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "ASTRO_MODE=development astro dev",
+    "start": "ASTRO_MODE=development astro dev",
+    "build": "ASTRO_MODE=production astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -21,6 +21,7 @@
     "@headlessui/vue": "^1.7.4",
     "@heroicons/vue": "^2.0.13",
     "astro": "^1.6.0",
+    "dotenv": "^16.0.3",
     "qs": "^6.11.0",
     "sharp": "^0.31.2",
     "tailwindcss": "^3.2.1",
