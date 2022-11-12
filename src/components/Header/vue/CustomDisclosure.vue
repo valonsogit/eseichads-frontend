@@ -27,7 +27,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 v-if="open"
                 :href="`${BASE_URL}${props.page.attributes.slug}`"
                 :class="
-                    props.currentUrl === `/${props.page.attributes.slug}`
+                    props.currentUrl === `${BASE_URL}${props.page.attributes.slug}`
                         ? `text-gray-500 pointer-events-none`
                         : `hover:text-gray-500`
                 "
@@ -36,7 +36,7 @@ const BASE_URL = import.meta.env.BASE_URL;
             <span
                 v-else
                 :class="
-                    props.currentUrl === `/${props.page.attributes.slug}`
+                    props.currentUrl === `${BASE_URL}${props.page.attributes.slug}`
                         ? `text-gray-500 pointer-events-none`
                         : `hover:text-gray-500`
                 "
@@ -69,7 +69,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                         :class="{
                             'text-gray-500 pointer-events-none':
                                 props.currentUrl ===
-                                `/${props.page.attributes.slug}/${childrenPage.attributes.slug}`,
+                                `${BASE_URL}${props.page.attributes.slug}/${childrenPage.attributes.slug}`,
                         }"
                     >
                         {{ childrenPage.attributes.title }}

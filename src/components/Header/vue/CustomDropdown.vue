@@ -18,7 +18,6 @@ interface Props {
 const props = defineProps<Props>();
 const BASE_URL = import.meta.env.BASE_URL;
 // bg-gradient-to-r bg-fixed from-[#313b41] to-[#46b396]
-console.log(props.currentUrl)
 </script>
 <template>
     <Menu
@@ -33,7 +32,7 @@ console.log(props.currentUrl)
                 :href="`${BASE_URL}${props.page.attributes.slug}`"
                 class="inline-flex items-center justify-center w-full rounded-md"
                 :class="
-                    props.currentUrl === `/${props.page.attributes.slug}`
+                    props.currentUrl === `${BASE_URL}${props.page.attributes.slug}`
                         ? `text-gray-500 pointer-events-none`
                         : `hover:text-gray-500`
                 "
@@ -65,7 +64,7 @@ console.log(props.currentUrl)
                     :class="{
                         'text-gray-500 pointer-events-none':
                             props.currentUrl ===
-                            `/${props.page.attributes.slug}/${childrenPage.attributes.slug}`,
+                            `${BASE_URL}${props.page.attributes.slug}/${childrenPage.attributes.slug}`,
                     }"
                     as="a"
                     :href="`${BASE_URL}${props.page.attributes.slug}/${childrenPage.attributes.slug}`"
