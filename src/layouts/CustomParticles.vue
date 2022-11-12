@@ -8,6 +8,7 @@ const particlesInit = async (engine: any) => {
 
 <template>
     <Particles
+        class="w-full h-full absolute z-0"
         id="tsparticles"
         :particlesInit="particlesInit"
         :options="{
