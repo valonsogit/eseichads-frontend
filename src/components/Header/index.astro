@@ -4,6 +4,7 @@ import headerLogo from "./images/logo.png";
 import CustomDropdown from "./vue/CustomDropdown.vue";
 import NavMenu from "./vue/NavMenu.vue";
 import qs from "qs";
+import CustomDisclosure from "./vue/CustomDisclosure.vue";
 export interface Props {
     currentUrl: string;
 }
@@ -39,9 +40,35 @@ const { currentUrl } = Astro.props;
     class="flex w-full p-4 md:p-3 md:px-8 h-[4.5rem] gap-4 bg-black fixed top-0 z-50 items-center font-bold text-xl border-b rounded-sm"
 >
     <NavMenu
-        client:load
+        client:media="(max-width: 768px)"
         class="md:hidden transition-all"
-    />
+    >
+        {
+            topPages.map(page => {
+                return !page.attributes.displayChildren &&
+                    page.attributes.childrenPages.data?.length ? (
+                    <CustomDisclosure
+                        client:media="(max-width: 768px)"
+                        page={page}
+                        currentUrl={currentUrl}
+                    />
+                ) : (
+                    <a
+                        href={`${import.meta.env.BASE_URL}${
+                            page.attributes.slug
+                        }`}
+                        class={
+                            currentUrl === `/${page.attributes.slug}`
+                                ? "text-gray-500 pointer-events-none"
+                                : "hover:text-gray-500"
+                        }
+                    >
+                        {page.attributes.title}
+                    </a>
+                );
+            })
+        }
+    </NavMenu>
     <Image
         alt="EseiChads"
         src={headerLogo}
@@ -52,16 +79,23 @@ const { currentUrl } = Astro.props;
     <nav class="w-full justify-end gap-4 hidden md:flex">
         {
             topPages.map(page => {
-                return !page.attributes.displayChildren && page.attributes.childrenPages.data?.length ? (
+                return !page.attributes.displayChildren &&
+                    page.attributes.childrenPages.data?.length ? (
                     <CustomDropdown
-                        client:load
+                        client:media="(min-width: 768px)"
                         page={page}
                         currentUrl={currentUrl}
                     />
                 ) : (
                     <a
-                        href={`/${page.attributes.slug}`}
-                        class="hover:text-gray-300 "
+                        href={`${import.meta.env.BASE_URL}${
+                            page.attributes.slug
+                        }`}
+                        class={
+                            currentUrl === `/${page.attributes.slug}`
+                                ? "text-gray-500 pointer-events-none"
+                                : "hover:text-gray-500"
+                        }
                     >
                         {page.attributes.title}
                     </a>

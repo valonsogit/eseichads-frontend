@@ -28,7 +28,7 @@ const currentUrl = Astro.url.pathname;
         <link
             rel="icon"
             type="image/svg+xml"
-            href="/favicon.svg"
+            href={`${import.meta.env.BASE_URL}favicon.svg`}
         />
         <meta
             name="generator"
@@ -77,31 +77,33 @@ const currentUrl = Astro.url.pathname;
         </header>
         <main
             id="content"
-            class="w-full flex flex-col items-center bg-black text-white bg-fixed bg-cover bg-center py-36 px-12"
+            class="w-full flex flex-col items-center bg-black text-white bg-fixed bg-cover bg-center py-36 px-8"
         >
             <slot />
         </main>
         <footer
-            class="w-full flex flex-col items-center justify-center bg-black text-white py-6 font-mono text-sm"
+            class="w-full flex flex-col items-center justify-center bg-black text-white py-6 font-mono text-sm px-8"
         >
-            <span class="w-2/3">
-                © Paulo Sánchez, 2022. Todos los derechos reservados.
-            </span>
-            <span><br /></span>
+            <div class="w-full md:w-2/3 flex flex-col">
+                <span class="w-full">
+                    © Paulo Sánchez, 2022. Todos los derechos reservados.
+                </span>
+                <span><br /></span>
 
-            <span class="w-2/3"
-                >Esta web y todo su contenido es propiedad exclusiva reservada a
-                los responsables de la misma y a las correspondientes figuras
-                mencionadas. No existe ninguna relación legal intencionada entre
-                el contenido aquí expuesto y el organismo oficial de la ESEI y/o
-                derivados (ESEIDA).
-            </span>
-            <span><br /></span>
-            <span class="w-2/3">
-                Para cualquier queja o reclamación sobre el contenido de esta
-                plataforma, diríjase al apartado de contacto para poder
-                comunicársela a los responsables.
-            </span>
+                <span class="w-full"
+                    >Esta web y todo su contenido es propiedad exclusiva
+                    reservada a los responsables de la misma y a las
+                    correspondientes figuras mencionadas. No existe ninguna
+                    relación legal intencionada entre el contenido aquí expuesto
+                    y el organismo oficial de la ESEI y/o derivados (ESEIDA).
+                </span>
+                <span><br /></span>
+                <span class="w-full">
+                    Para cualquier queja o reclamación sobre el contenido de
+                    esta plataforma, diríjase al apartado de contacto para poder
+                    comunicársela a los responsables.
+                </span>
+            </div>
         </footer>
 
         <style is:global>
@@ -113,6 +115,8 @@ const currentUrl = Astro.url.pathname;
                     #da62c4 30%,
                     white 60%
                 );
+            }
+            a {
             }
         </style>
     </body>

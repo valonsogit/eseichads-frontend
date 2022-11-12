@@ -21,6 +21,6 @@ export default defineConfig({
   integrations: [tailwind(), sitemap(), prefetch(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
   }), vue({ appEntrypoint: '/src/pages/_app' })],
-  site: 'https://valonsogit.github.io',
-  base: '/eseichads-frontend',
+  site: import.meta.env.SITE_URL,
+  base: import.meta.env.BASE,
 });
