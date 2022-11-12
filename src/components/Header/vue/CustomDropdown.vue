@@ -18,6 +18,7 @@ interface Props {
 const props = defineProps<Props>();
 const BASE_URL = import.meta.env.BASE_URL;
 // bg-gradient-to-r bg-fixed from-[#313b41] to-[#46b396]
+console.log(props.currentUrl)
 </script>
 <template>
     <Menu
