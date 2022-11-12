@@ -58,7 +58,7 @@ const { currentUrl } = Astro.props;
                             page.attributes.slug
                         }`}
                         class={
-                            currentUrl === `/${page.attributes.slug}`
+                            currentUrl === `${import.meta.env.BASE_URL}${page.attributes.slug}/`
                                 ? "text-gray-500 pointer-events-none"
                                 : "hover:text-gray-500"
                         }
@@ -92,7 +92,7 @@ const { currentUrl } = Astro.props;
                             page.attributes.slug
                         }`}
                         class={
-                            currentUrl === `/${page.attributes.slug}`
+                            currentUrl === `${import.meta.env.BASE_URL}${page.attributes.slug}/`
                                 ? "text-gray-500 pointer-events-none"
                                 : "hover:text-gray-500"
                         }
